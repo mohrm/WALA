@@ -10,11 +10,15 @@
  *******************************************************************************/
 package com.ibm.wala.util.intset;
 
-import java.util.Collection;
-import java.util.Iterator;
-
 import com.ibm.wala.util.collections.Iterator2Collection;
 import com.ibm.wala.util.debug.Assertions;
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * A Set backed by a set of integers.
@@ -237,4 +241,7 @@ public class OrdinalSet<T> implements Iterable<T> {
     return mapping;
   }
 
+  public Stream<T> stream() {
+    return StreamSupport.stream(Spliterators.spliterator(iterator(), size(), Spliterator.DISTINCT | Spliterator.SIZED), false);
+  }
 }

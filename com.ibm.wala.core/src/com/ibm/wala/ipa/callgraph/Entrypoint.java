@@ -156,6 +156,10 @@ public abstract class Entrypoint implements BytecodeConstants {
     return this == obj;
   }
 
+  public SSAAbstractInvokeInstruction addCall(AbstractRootMethod m) {
+    return addCall(m, null);
+  }
+
   /**
    * Add a call to this entrypoint from the fake root method
    * 

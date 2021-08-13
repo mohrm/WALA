@@ -11,14 +11,14 @@
 
 package com.ibm.wala.cfg.exc.intra;
 
-import java.util.Collection;
-import java.util.Map.Entry;
-
 import com.ibm.wala.dataflow.graph.AbstractMeetOperator;
 import com.ibm.wala.fixpoint.AbstractVariable;
 import com.ibm.wala.fixpoint.FixedPointConstants;
 import com.ibm.wala.fixpoint.UnaryOperator;
 import com.ibm.wala.ssa.SymbolTable;
+
+import java.util.Collection;
+import java.util.Map.Entry;
 
 /**
  * States for the ssa variables.
@@ -319,7 +319,9 @@ public class NullPointerState extends AbstractVariable<NullPointerState> {
       }
       lhs.vars[varNum] = State.UNKNOWN;
       for (int from : fromVars) {
+        if (from != -1) {
           changed |= lhs.meet(varNum, rhs.vars[from]);
+        }
       }
       
       return (changed ? FixedPointConstants.CHANGED : FixedPointConstants.NOT_CHANGED);

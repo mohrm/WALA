@@ -1,4 +1,4 @@
-WALA [![Build Status](https://travis-ci.org/wala/WALA.svg?branch=master)](https://travis-ci.org/wala/WALA)
+WALA [![Build status](https://github.com/joana-team/WALA/actions/workflows/mvn.yml/badge.svg)](https://github.com/joana-team/WALA/actions/workflows/mvn.yml)
 =====================
 
 This is the main source repository for WALA.  For more details on WALA, see <a

@@ -17,6 +17,10 @@ import com.ibm.wala.types.MethodReference;
 import com.ibm.wala.types.Selector;
 import com.ibm.wala.types.TypeReference;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 /**
  * Basic interface for an object that represents a single Java method for analysis purposes.
  */
@@ -107,6 +111,10 @@ public interface IMethod extends IMember, ContextItem {
    * @throws InvalidClassFileException
    */
   TypeReference[] getDeclaredExceptions() throws InvalidClassFileException, UnsupportedOperationException;
+
+  default List<TypeReference> getParameterTypes() {
+    return IntStream.range(0, getNumberOfParameters()).mapToObj(this::getParameterType).collect(Collectors.toList());
+  }
 
   /**
    * @return the source line number corresponding to a particular bytecode index, or -1 if the information is not available.

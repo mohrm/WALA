@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Simple implementation of a class hierarchy.
@@ -1067,6 +1068,10 @@ public class ClassHierarchy implements IClassHierarchy {
   @Override
   public int getNumberOfClasses() {
     return map.keySet().size();
+  }
+
+  @Override public List<IClass> getClasses() {
+    return  map.values().stream().map(k -> k.klass).collect(Collectors.toList());
   }
 
   @Override

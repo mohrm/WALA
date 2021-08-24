@@ -13,8 +13,11 @@ package com.ibm.wala.ipa.cha;
 import com.ibm.wala.classLoader.*;
 import com.ibm.wala.ipa.callgraph.AnalysisScope;
 import com.ibm.wala.types.*;
+import com.ibm.wala.util.collections.Iterator2List;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -40,6 +43,10 @@ public interface IClassHierarchy extends Iterable<IClass> {
    * @return The number of classes present in the class hierarchy.
    */
   public int getNumberOfClasses();
+
+  default List<IClass> getClasses() {
+    return new Iterator2List<>(iterator(), new ArrayList<>());
+  }
 
   public boolean isRootClass(IClass c);
 

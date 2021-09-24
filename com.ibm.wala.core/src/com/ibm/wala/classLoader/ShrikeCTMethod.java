@@ -107,7 +107,11 @@ public final class ShrikeCTMethod extends ShrikeBTMethod implements IBytecodeMet
     try {
       d.decode();
     } catch (Decoder.InvalidBytecodeException ex) {
-      Assertions.UNREACHABLE();
+      try {
+        throw new AssertionError(String.format("Problem with %s::%s", getDeclaringClass().getName().toString(), getMethodName()), ex);
+      } catch (InvalidClassFileException e) {
+        Assertions.UNREACHABLE();
+      }
     }
     return d;
   }
@@ -289,7 +293,7 @@ public final class ShrikeCTMethod extends ShrikeBTMethod implements IBytecodeMet
     }
 
     if (localNumber > getMaxLocals()) {
-      throw new IllegalArgumentException("illegal local number: " + localNumber + ", method " + getDeclaringClass().getName() + 
+      throw new IllegalArgumentException("illegal local number: " + localNumber + ", method " + getDeclaringClass().getName() +
               "." + getName() + " uses at most " + getMaxLocals());
     }
 

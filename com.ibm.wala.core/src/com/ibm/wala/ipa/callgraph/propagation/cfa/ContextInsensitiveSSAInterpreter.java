@@ -45,7 +45,7 @@ public class ContextInsensitiveSSAInterpreter extends ContextInsensitiveRTAInter
     // EVERYWHERE context
     return getAnalysisCache().getIR(node.getMethod(), Everywhere.EVERYWHERE);
   }
-  
+
   @Override
   public IRView getIRView(CGNode node) {
     return getIR(node);

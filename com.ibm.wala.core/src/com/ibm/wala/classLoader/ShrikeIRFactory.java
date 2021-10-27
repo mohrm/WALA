@@ -10,28 +10,18 @@
  *******************************************************************************/
 package com.ibm.wala.classLoader;
 
-import java.util.Collection;
-
 import com.ibm.wala.cfg.ControlFlowGraph;
 import com.ibm.wala.cfg.ShrikeCFG;
 import com.ibm.wala.ipa.callgraph.Context;
 import com.ibm.wala.shrikeBT.IInstruction;
 import com.ibm.wala.shrikeCT.InvalidClassFileException;
-import com.ibm.wala.ssa.DefUse;
-import com.ibm.wala.ssa.IR;
-import com.ibm.wala.ssa.IRFactory;
-import com.ibm.wala.ssa.SSAArrayLengthInstruction;
-import com.ibm.wala.ssa.SSABuilder;
-import com.ibm.wala.ssa.SSACFG;
-import com.ibm.wala.ssa.SSAInstruction;
-import com.ibm.wala.ssa.SSANewInstruction;
-import com.ibm.wala.ssa.SSAOptions;
-import com.ibm.wala.ssa.ShrikeIndirectionData;
-import com.ibm.wala.ssa.SymbolTable;
+import com.ibm.wala.ssa.*;
 import com.ibm.wala.ssa.analysis.DeadAssignmentElimination;
 import com.ibm.wala.ssa.analysis.TrivialPhiElimination;
 import com.ibm.wala.types.TypeReference;
 import com.ibm.wala.util.WalaRuntimeException;
+
+import java.util.Collection;
 
 /**
  * An {@link IRFactory} that for methods that originate from Shrike.
@@ -67,25 +57,25 @@ public class ShrikeIRFactory implements IRFactory<IBytecodeMethod<IInstruction>>
       private final SSA2LocalMap localMap;
 
       private final ShrikeIndirectionData indirectionData;
-      
+
       /**
        * Remove any phis that are dead assignments.
-       * 
+       *
        * TODO: move this elsewhere?
        */
       private void eliminateDeadPhis() {
         DeadAssignmentElimination.perform(this);
       }
-      
+
       /**
        * Remove any phis that are trivial.
-       * 
+       *
        * TODO: move this elsewhere?
        */
       private void eliminateTrivialPhis() {
         TrivialPhiElimination.perform(this);
       }
-      
+
       private void pruneExceptionsForSafeArrayCreations() {
         DefUse du = new DefUse(this);
         for (int i = 0; i < newInstrs.length; i++) {
@@ -156,7 +146,7 @@ public class ShrikeIRFactory implements IRFactory<IBytecodeMethod<IInstruction>>
           localMap = null;
 
         indirectionData = builder.getIndirectionData();
-        
+
         eliminateDeadPhis();
         eliminateTrivialPhis();
         pruneExceptionsForSafeArrayCreations();

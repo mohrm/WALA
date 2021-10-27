@@ -10,11 +10,11 @@
  *******************************************************************************/
 package com.ibm.wala.util.collections;
 
+import com.ibm.wala.util.debug.Assertions;
+
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-import com.ibm.wala.util.debug.Assertions;
 
 public class Pair<T,U> implements Serializable {
 
@@ -75,7 +75,7 @@ public class Pair<T,U> implements Serializable {
       }
     };
   }
-  
+
   @Override
   public String toString() {
     return "[" + fst + "," + snd +"]";
@@ -83,5 +83,18 @@ public class Pair<T,U> implements Serializable {
 
   public static <T,U> Pair<T, U> make(T x, U y) {
     return new Pair<>(x,y);
+  }
+
+  public <S, V, E extends Throwable> Pair<S, V> map(ThrowingFunction<T, S, ? extends E> firstMap,
+      ThrowingFunction<U, V, ? extends E> secondMap) throws E {
+    return new Pair<>(firstMap.apply(fst), secondMap.apply(snd));
+  }
+
+  public <S, E extends Throwable> Pair<S, U> mapFirst(ThrowingFunction<T, S, E> firstMap) throws E {
+    return new Pair<>(firstMap.apply(fst), snd);
+  }
+
+  public <V, E extends Throwable> Pair<T, V> mapSecond(ThrowingFunction<U, V, E> secondMap) throws E {
+    return new Pair<>(fst, secondMap.apply(snd));
   }
 }

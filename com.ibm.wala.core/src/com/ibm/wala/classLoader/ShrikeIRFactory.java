@@ -44,7 +44,7 @@ public class ShrikeIRFactory implements IRFactory<IBytecodeMethod<IInstruction>>
     try {
       shrikeInstructions = method.getInstructions();
     } catch (InvalidClassFileException e) {
-      throw new WalaRuntimeException("bad method bytecodes", e);
+      throw new WalaRuntimeException(String.format("bad method bytecodes %s ", method), e);
     }
     final ShrikeCFG shrikeCFG = (ShrikeCFG) makeCFG(method);
 
